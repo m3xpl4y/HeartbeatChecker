@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcProtos";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package heartbeat;
+
+service Heartbeat{
+	rpc Send (GetComputerInformation) returns (ReceiveHeartbeat);
+	rpc ShutdowMessage(SendShutdown) returns (google.protobuf.Empty);
+}
+
+message GetComputerInformation{
+	google.protobuf.Timestamp timestamp= 1;
+	double cpuTemperatur = 2;
+	double cpuSpeed = 3;
+	double gpuTemperatur = 4;
+	string computerName = 5;
+	string processorIdentifier = 6;
+	float currentMemoryUsage = 7;
+	float availableMemory = 8;
+}
+
+message ReceiveHeartbeat{
+	bool recieved = 1;
+}
+
+message SendShutdown{
+	string shutdownmessage = 1;
+}
